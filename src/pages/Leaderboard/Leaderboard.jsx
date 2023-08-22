@@ -20,7 +20,6 @@ export default function TempTxn() {
 
   const clickedNext = async () => {
     let offset = offsetSetting + limit
-    setOffsetSetting(offset)
     await runLoadLeaderboard(offset);
   }
 
@@ -57,6 +56,9 @@ export default function TempTxn() {
         if (object.length > 0) {
           setRankings(object)
           setOffsetSetting(offset)
+          if(object.length < limit) {
+            setNextButtonDisabled(true)
+          } 
         } else {
           setNextButtonDisabled(true)
         }

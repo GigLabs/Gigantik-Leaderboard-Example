@@ -224,6 +224,10 @@ td {
   border-bottom: 0;
 }
 
+.next:disabled {
+  background-color: #a08b7e;
+}
+
 @media (max-width: 740px) {
   * {
     font-size: 70%;
