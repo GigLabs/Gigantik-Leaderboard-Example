@@ -6,12 +6,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/">
-          <Route
-            path="leaderboard"
-            element={<Leaderboard />}
-          />
-        </Route>
+        <Route
+          path="/"
+          element={<Leaderboard />}
+        />
       </Routes>
     </BrowserRouter>
   );
