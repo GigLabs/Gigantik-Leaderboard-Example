@@ -7,7 +7,7 @@ export default function TempTxn() {
 
   const orgId = ; // Organization ID for the org interested in loading.
   const backUrl = "https://www.gigantik.io"; // Back link to site.
-  const limit = 20; // Limit is the number of rows to display on each page of leaderboard
+  const limit = 25; // Limit is the number of rows to display on each page of leaderboard
   const [offsetSetting, setOffsetSetting] = useState(0);
   const [rankings, setRankings] = useState([]);
   const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
@@ -31,6 +31,48 @@ export default function TempTxn() {
         setNextButtonDisabled(false)
       }
       await runLoadLeaderboard(offset);
+    }
+  }
+
+  const vieweaderboard = () => {
+    if(rankings.length > 0) {
+      return (
+        <div id="leaderboard">
+          {offsetSetting === 0? <div className="ribbon"></div> : <div></div>}
+          <table>
+              {rankings.map((entry, index) => (
+                <tr>
+                  <td className="number">{(index + offsetSetting + 1)}</td>
+                  <td className="name">{entry.username? entry.username : entry.wallet_id}</td>
+                  <td className="points">{entry.collector_score}</td>
+                </tr>
+              ))}
+          </table>
+          <div id="buttons">
+            <button className="previous" disabled={(offsetSetting === 0)} onClick={async () => await clickedPrev()}>Prev</button>
+            <button className="next" disabled={nextButtonDisabled} onClick={async () => await clickedNext()}>Next</button>
+          </div>
+          <br />
+          <br />
+        </div>
+      )
+    } else {
+      return (
+        <div id="leaderboard">
+          <table>
+            <tr>
+              <td className="number">0</td>
+              <td className="name">No Entries</td>
+            </tr>
+          </table>
+          <div id="buttons">
+            <button className="previous" disabled={(offsetSetting === 0)} onClick={async () => await clickedPrev()}>Prev</button>
+            <button className="next" disabled={nextButtonDisabled} onClick={async () => await clickedNext()}>Next</button>
+          </div>
+          <br />
+          <br />
+        </div>
+      );
     }
   }
 
@@ -84,24 +126,7 @@ export default function TempTxn() {
           <div id="header">
             <h1>Leaderboard</h1>
           </div>
-          <div id="leaderboard">
-            {offsetSetting === 0? <div className="ribbon"></div> : <div></div>}
-            <table>
-                {rankings.map((entry, index) => (
-                  <tr>
-                    <td className="number">{(index + offsetSetting + 1)}</td>
-                    <td className="name">{entry.username? entry.username : entry.wallet_id}</td>
-                    <td className="points">{entry.collector_score}</td>
-                  </tr>
-                ))}
-            </table>
-            <div id="buttons">
-              <button className="previous" disabled={(offsetSetting === 0)} onClick={async () => await clickedPrev()}>Prev</button>
-              <button className="next" disabled={nextButtonDisabled} onClick={async () => await clickedNext()}>Next</button>
-            </div>
-            <br />
-            <br />
-          </div>
+          {vieweaderboard()}
         </div>
       </header>
     </div>
